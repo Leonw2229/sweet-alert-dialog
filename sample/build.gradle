@@ -1,15 +1,12 @@
 apply plugin: 'com.android.application'
 
-version = VERSION_NAME
-group = GROUP
-
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
         minSdkVersion 9
-        targetSdkVersion 21
+        targetSdkVersion 28
     }
 
     lintOptions {
@@ -23,9 +20,9 @@ android {
             shrinkResources true
         }
     }
-    buildToolsVersion '26.0.2'
+    buildToolsVersion '28.0.0'
 }
 
 dependencies {
-    compile project(':library')
+    implementation project(':library')
 }

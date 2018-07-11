@@ -1,29 +1,35 @@
-## Attention: This is a fork of the apparently dead project https://github.com/pedant/sweet-alert-dialog/
-**The only changes made are to update it to work with materialish-progress 1.7 and the current gradle build tools.**
-
-The original readme with minor alterations follows.  I've removed the Chinese language readme as I can only read and write English.
-
-I did not write this library, all credit goes to pedant.
-
 Sweet Alert Dialog
 ===================
-SweetAlert for Android, a beautiful and clever alert dialog
+Android版的SweetAlert，清新文艺，快意灵动的甜心弹框
 
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Sweet%20Alert%20Dialog-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/1065)
 
-Inspired by JavaScript [SweetAlert](http://tristanedwards.me/sweetalert)
+灵感来源于JS版[SweetAlert](http://tristanedwards.me/sweetalert)
 
-[Demo Download](https://github.com/pedant/sweet-alert-dialog/releases/download/v1.1/sweet-alert-sample-v1.1.apk)
+## 更新日志
+- 修改 dismissWithAnimation() 方法执行后再次show不显示的问题
 
-## ScreenShot
-![image](https://github.com/pedant/sweet-alert-dialog/raw/master/change_type.gif)
 
-## Setup
-The simplest way to use SweetAlertDialog is to add the library as aar dependency to your build.  Tag v1.4.0 has the updates.  See: https://jitpack.io/ for full instructions.
+[Demo下载](https://github.com/pedant/sweet-alert-dialog/releases/download/v1.1/sweet-alert-sample-v1.1.apk)
 
-## Usage
+## 运行示意图
+![image](https://raw.githubusercontent.com/pedant/sweet-alert-dialog/master/change_type.gif)
 
-show material progress
+## 安装
+使用SweetAlertDialog最简单的办法就是像下面这样添加项目依赖。
+
+**Gradle**
+
+    repositories {
+       maven { url "https://jitpack.io" }
+    }
+
+    dependencies {
+        implementation 'com.github.lmyDevs:sweet-alert-dialog:v1.+'
+    }
+
+## 如何开始
+显示Material进度样式
 
     SweetAlertDialog pDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
     pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
@@ -33,7 +39,7 @@ show material progress
 
 ![image](https://github.com/pedant/sweet-alert-dialog/raw/master/play_progress.gif)
 
-You can customize progress bar dynamically with materialish-progress methods via **SweetAlertDialog.getProgressHelper()**:
+你可以通过**SweetAlertDialog.getProgressHelper()**调用materialish-progress中下面这些方法，来动态改变进度条的样式
 - resetCount()
 - isSpinning()
 - spin()
@@ -54,31 +60,31 @@ You can customize progress bar dynamically with materialish-progress methods via
 - getSpinSpeed()
 - setSpinSpeed(float spinSpeed)
 
-thanks to the project [materialish-progress](https://github.com/pnikosis/materialish-progress) and [@croccio](https://github.com/croccio) participation.
+感谢[materialish-progress](https://github.com/pnikosis/materialish-progress)项目以及[@croccio](https://github.com/croccio)的参与。
 
-more usages about progress, please see the sample.
+更多关于进度条的用法，请参见样例代码。
 
-A basic message：
+只显示标题：
 
     new SweetAlertDialog(this)
         .setTitleText("Here's a message!")
         .show();
 
-A title with a text under：
+显示标题和内容：
 
     new SweetAlertDialog(this)
         .setTitleText("Here's a message!")
         .setContentText("It's pretty, isn't it?")
         .show();
 
-A error message：
+显示异常样式：
 
     new SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE)
         .setTitleText("Oops...")
         .setContentText("Something went wrong!")
         .show();
 
-A warning message：
+显示警告样式：
 
     new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
         .setTitleText("Are you sure?")
@@ -86,14 +92,14 @@ A warning message：
         .setConfirmText("Yes,delete it!")
         .show();
 
-A success message：
+显示成功完成样式：
 
     new SweetAlertDialog(this, SweetAlertDialog.SUCCESS_TYPE)
         .setTitleText("Good job!")
         .setContentText("You clicked the button!")
         .show();
 
-A message with a custom icon：
+自定义头部图像：
 
     new SweetAlertDialog(this, SweetAlertDialog.CUSTOM_IMAGE_TYPE)
         .setTitleText("Sweet!")
@@ -101,7 +107,7 @@ A message with a custom icon：
         .setCustomImage(R.drawable.custom_img)
         .show();
 
-Bind the listener to confirm button：
+确认事件绑定：
 
     new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
         .setTitleText("Are you sure?")
@@ -115,7 +121,7 @@ Bind the listener to confirm button：
         })
         .show();
 
-Show the cancel button and bind listener to it：
+显示取消按钮及事件绑定：
 
     new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
         .setTitleText("Are you sure?")
@@ -131,7 +137,7 @@ Show the cancel button and bind listener to it：
         })
         .show();
 
-**Change** the dialog style upon confirming：
+确认后**切换**对话框样式：
 
     new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
         .setTitleText("Are you sure?")
@@ -150,7 +156,7 @@ Show the cancel button and bind listener to it：
         })
         .show();
 
-[more android tech shares: pedant.cn](http://www.pedant.cn)
+[更多Android原创技术分享见: pedant.cn](http://www.pedant.cn)
 
 ## License
 

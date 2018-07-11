@@ -20,7 +20,7 @@ android {
             shrinkResources true
         }
     }
-    buildToolsVersion '28.0.0'
+    buildToolsVersion '28.0.1'
 }
 
 dependencies {

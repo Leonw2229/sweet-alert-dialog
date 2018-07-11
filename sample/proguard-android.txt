@@ -1,3 +1,3 @@
- -keep class com.ontbee.legacyforks.cn.pedant.SweetAlert.Rotate3dAnimation {
+ -keep class cn.madog.SweetAlertDialog.Rotate3dAnimation {
     public <init>(...);
  }

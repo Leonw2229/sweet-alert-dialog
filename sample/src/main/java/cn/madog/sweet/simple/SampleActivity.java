@@ -1,15 +1,18 @@
-package com.ontbee.legacyforks.cn.pedant.SweetAlert.sample;
+package cn.madog.sweet.simple;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
 
-import com.ontbee.legacyforks.cn.pedant.SweetAlert.SweetAlertDialog;
+import com.ontbee.legacyforks.cn.pedant.SweetAlert.sample.R;
+
+import cn.madog.SweetAlertDialog.SweetAlertDialog;
 
 public class SampleActivity extends Activity implements View.OnClickListener {
 
     private int i = -1;
+    private SweetAlertDialog sd;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -23,6 +26,8 @@ public class SampleActivity extends Activity implements View.OnClickListener {
         findViewById(R.id.warning_cancel_test).setOnClickListener(this);
         findViewById(R.id.custom_img_test).setOnClickListener(this);
         findViewById(R.id.progress_dialog).setOnClickListener(this);
+
+        sd = new SweetAlertDialog(this);
     }
 
     @Override
@@ -30,7 +35,6 @@ public class SampleActivity extends Activity implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.basic_test:
                 // default title "Here's a message!"
-                SweetAlertDialog sd = new SweetAlertDialog(this);
                 sd.setCancelable(true);
                 sd.setCanceledOnTouchOutside(true);
                 sd.show();

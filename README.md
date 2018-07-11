@@ -2,7 +2,7 @@ Sweet Alert Dialog
 ===================
 Android版的SweetAlert，清新文艺，快意灵动的甜心弹框
 
-[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Sweet%20Alert%20Dialog-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/1065)
+![GitHub release](https://img.shields.io/github/release/lmyDevs/sweet-alert-dialog.svg)
 
 灵感来源于JS版[SweetAlert](http://tristanedwards.me/sweetalert)
 

@@ -19,6 +19,9 @@ android {
 dependencies {
     implementation 'com.pnikosis:materialish-progress:1.7'
 }
+repositories {
+    mavenCentral()
+}
 
 // I may push to maven central at some point, for now just using jitpack.io.
 // apply from: 'https://raw.github.com/chrisbanes/gradle-mvn-push/master/gradle-mvn-push.gradle'

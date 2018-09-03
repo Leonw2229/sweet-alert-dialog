@@ -6,6 +6,7 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
@@ -17,10 +18,11 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import cn.madog.R;
 import com.pnikosis.materialishprogress.ProgressWheel;
 
 import java.util.List;
+
+import cn.madog.R;
 
 public class SweetAlertDialog extends Dialog implements View.OnClickListener {
     private static final String TAG = "SweetAlertDialog";
@@ -67,13 +69,7 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener {
     public static final int CUSTOM_IMAGE_TYPE = 4;
     public static final int PROGRESS_TYPE = 5;
 
-    public static interface OnSweetClickListener {
-        public void onClick (SweetAlertDialog sweetAlertDialog);
-    }
-
-    public SweetAlertDialog(Context context) {
-        this(context, NORMAL_TYPE);
-    }
+    private boolean isInStart = false;
 
     public SweetAlertDialog(Context context, int alertType) {
         super(context, R.style.alert_dialog);
@@ -136,8 +132,10 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener {
                 getWindow().setAttributes(wlp);
             }
         };
+
+
         mOverlayOutAnim.setDuration(120);
-        // dialog overlay fade out
+
         mOverlayInAnim = new Animation() {
             @Override
             protected void applyTransformation(float interpolatedTime, Transformation t) {
@@ -146,7 +144,28 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener {
                 getWindow().setAttributes(wlp);
             }
         };
+
+        mOverlayInAnim.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                isInStart = true;
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                isInStart = false;
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
         mOverlayInAnim.setDuration(120);
+    }
+
+    public SweetAlertDialog(Context context) {
+        this(context, NORMAL_TYPE);
     }
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -154,19 +173,19 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener {
         setContentView(R.layout.alert_dialog);
 
         mDialogView = getWindow().getDecorView().findViewById(android.R.id.content);
-        mTitleTextView = (TextView)findViewById(R.id.title_text);
-        mContentTextView = (TextView)findViewById(R.id.content_text);
-        mErrorFrame = (FrameLayout)findViewById(R.id.error_frame);
-        mErrorX = (ImageView)mErrorFrame.findViewById(R.id.error_x);
-        mSuccessFrame = (FrameLayout)findViewById(R.id.success_frame);
-        mProgressFrame = (FrameLayout)findViewById(R.id.progress_dialog);
-        mSuccessTick = (SuccessTickView)mSuccessFrame.findViewById(R.id.success_tick);
+        mTitleTextView = findViewById(R.id.title_text);
+        mContentTextView = findViewById(R.id.content_text);
+        mErrorFrame = findViewById(R.id.error_frame);
+        mErrorX = mErrorFrame.findViewById(R.id.error_x);
+        mSuccessFrame = findViewById(R.id.success_frame);
+        mProgressFrame = findViewById(R.id.progress_dialog);
+        mSuccessTick = mSuccessFrame.findViewById(R.id.success_tick);
         mSuccessLeftMask = mSuccessFrame.findViewById(R.id.mask_left);
         mSuccessRightMask = mSuccessFrame.findViewById(R.id.mask_right);
-        mCustomImage = (ImageView)findViewById(R.id.custom_image);
-        mWarningFrame = (FrameLayout)findViewById(R.id.warning_frame);
-        mConfirmButton = (Button)findViewById(R.id.confirm_button);
-        mCancelButton = (Button)findViewById(R.id.cancel_button);
+        mCustomImage = findViewById(R.id.custom_image);
+        mWarningFrame = findViewById(R.id.warning_frame);
+        mConfirmButton = findViewById(R.id.confirm_button);
+        mCancelButton = findViewById(R.id.cancel_button);
         mProgressHelper.setProgressWheel((ProgressWheel)findViewById(R.id.progressWheel));
         mConfirmButton.setOnClickListener(this);
         mCancelButton.setOnClickListener(this);
@@ -193,14 +212,13 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener {
         mSuccessTick.clearAnimation();
         mSuccessLeftMask.clearAnimation();
         mSuccessRightMask.clearAnimation();
+
+        if (!isInStart) {
+            mConfirmButton.startAnimation(mOverlayInAnim);
+        }
+
     }
 
-    public void hideConfirmButton(){
-        if(mConfirmButton != null){
-            mConfirmButton.setVisibility(View.GONE);
-        }
-    }
-    
     private void playAnimation () {
         if (mAlertType == ERROR_TYPE) {
             mErrorFrame.startAnimation(mErrorInAnim);
@@ -209,6 +227,22 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener {
             mSuccessTick.startTickAnim();
             mSuccessRightMask.startAnimation(mSuccessBowAnim);
         }
+
+    }
+
+    public void hideConfirmButton() {
+        if (mConfirmButton != null) {
+            mConfirmButton.setVisibility(View.GONE);
+        }
+    }
+
+    protected void onStart() {
+        Log.d(TAG, "onStart() called");
+        mDialogView.startAnimation(mModalInAnim);
+        playAnimation();
+        WindowManager.LayoutParams wlp = getWindow().getAttributes();
+        wlp.alpha = 1;
+        getWindow().setAttributes(wlp);
     }
 
     private void changeAlertType(int alertType, boolean fromCreate) {
@@ -353,12 +387,8 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener {
         return this;
     }
 
-    protected void onStart() {
-        mDialogView.startAnimation(mModalInAnim);
-        playAnimation();
-        WindowManager.LayoutParams wlp = getWindow().getAttributes();
-        wlp.alpha = 1;
-        getWindow().setAttributes(wlp);
+    public interface OnSweetClickListener {
+        void onClick(SweetAlertDialog sweetAlertDialog);
     }
 
     /**

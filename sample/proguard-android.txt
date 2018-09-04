@@ -1,3 +1,5 @@
  -keep class cn.madog.SweetAlertDialog.Rotate3dAnimation {
     public <init>(...);
  }
+ -keep class cn.madog.SweetAlertDialog.** {*;}
+ -keepclassmembers class ccn.madog.SweetAlertDialog.** {*;}

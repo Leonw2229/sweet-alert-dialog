@@ -5,10 +5,10 @@ group='com.github.lmydevs'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
-        minSdkVersion 9
+        minSdkVersion 14
+        targetSdkVersion 28
     }
 
     lintOptions {

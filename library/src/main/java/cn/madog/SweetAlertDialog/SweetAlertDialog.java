@@ -239,7 +239,6 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener {
     }
 
     protected void onStart() {
-        Log.d(TAG, "onStart() called");
         mDialogView.startAnimation(mModalInAnim);
         playAnimation();
         WindowManager.LayoutParams wlp = getWindow().getAttributes();
